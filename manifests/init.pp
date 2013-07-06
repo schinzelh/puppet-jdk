@@ -30,9 +30,9 @@ class jdk($version='6') {
   }
 
     if($::operatingsystem =~ /RedHat|CentOS/) {
-      $package = 'jdk-6u38-linux-x64-rpm.bin'
+      $package = 'jdk-6u45-linux-x64.bin'
       $cookie = '"Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com"'
-      $url = "http://download.oracle.com/otn-pub/java/jdk/6u38-b05/${package}"
+      $url = "http://download.oracle.com/otn-pub/java/jdk/6u45-b06/${package}"
 
       # http://getpocket.com/a/read/153528263
       exec{'download jdk':
@@ -47,21 +47,21 @@ class jdk($version='6') {
         path    => '/bin'
       }
 
-      exec{'install jdk':
-        command => "yes \"\" | /tmp/${package}",
-        cwd     => '/tmp',
-        user    => 'root',
-        path    => '/usr/bin/',
-        unless  => '/usr/bin/test -d /usr/java',
-        timeout => 600,
-        require => [Exec['download jdk'], Exec['chmod jdk package']]
-      }
+#      exec{'install jdk':
+#        command => "yes \"\" | /tmp/${package}",
+#        cwd     => '/tmp',
+#        user    => 'root',
+#        path    => '/usr/bin/',
+#        unless  => '/usr/bin/test -d /usr/java',
+#        timeout => 600,
+#        require => [Exec['download jdk'], Exec['chmod jdk package']]
+#      }
 
-      exec{'update alternative':
-        command => 'alternatives --install /usr/bin/java java /usr/java/jdk1.6.0_38/bin/java 2',
-        user    => 'root',
-        path    => '/usr/sbin/',
-        unless  => '/usr/bin/which java'
-      }
+#      exec{'update alternative':
+#        command => 'alternatives --install /usr/bin/java java /usr/java/jdk1.6.0_45/bin/java 2',
+#        user    => 'root',
+#        path    => '/usr/sbin/',
+#        unless  => '/usr/bin/which java'
+#      }
     }
 }
