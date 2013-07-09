@@ -53,12 +53,11 @@ class jdk($version='6') {
         user    => 'root',
         require => [Exec['download jdk'], Exec['chmod jdk package']]
       }
-
-#      exec{'update alternative':
-#        command => 'alternatives --install /usr/bin/java java /usr/java/jdk1.6.0_45/bin/java 2',
-#        user    => 'root',
-#        path    => '/usr/sbin/',
-#        unless  => '/usr/bin/which java'
-#      }
+      
+      file { '/srv/system/java':
+        ensure => link,
+        target => '/srv/opt/jdk1.6.0_45',
+        require => [Exec['install jdk']]
+      }
     }
 }
