@@ -47,15 +47,12 @@ class jdk($version='6') {
         path    => '/bin'
       }
 
-#      exec{'install jdk':
-#        command => "yes \"\" | /tmp/${package}",
-#        cwd     => '/tmp',
-#        user    => 'root',
-#        path    => '/usr/bin/',
-#        unless  => '/usr/bin/test -d /usr/java',
-#        timeout => 600,
-#        require => [Exec['download jdk'], Exec['chmod jdk package']]
-#      }
+      exec{'install jdk':
+        command => "/tmp/${package}",
+        cwd     => '/srv/opt',
+        user    => 'root',
+        require => [Exec['download jdk'], Exec['chmod jdk package']]
+      }
 
 #      exec{'update alternative':
 #        command => 'alternatives --install /usr/bin/java java /usr/java/jdk1.6.0_45/bin/java 2',
